@@ -1,0 +1,15 @@
+.container {
+    background-color: black;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 200px; /* Adjust the height as needed */
+}
+
+.column {
+    background-color: purple;
+    border-radius: 10px; /* Rounded corners */
+    width: 100px; /* Width of the columns */
+    height: 100%; /* Height will be 100% of the container */
+}

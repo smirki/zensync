@@ -12,6 +12,8 @@ def generate_text(model_name, prompt, seed, temperature=0):
         }
     }
 
+    # generate a command line
+
     response = requests.post(API_URL, json=payload)
     if response.status_code == 200:
         # Parse the JSON response and return the text completion
@@ -25,9 +27,11 @@ if __name__ == "__main__":
     seed = 42  # Replace with your desired seed for reproducibility
     prompt = """ Respond to this question with ONLY one of with these choice and nothing else in json: 
     (addContact : name | removeContact : name | scheduleMeeting : *create the title, use 24hr format, standard datetime, and leave anything as " " if it is not easily discernable.* 
-    [attendees, title, date, time] | editMeeting : name | moveMeeting : meetingName | removeMeeting : name) based the question, try to figure out what its asking. 
+    [attendees, title, date, time] | editMeeting : name | moveMeeting : meetingName | removeMeeting : *create the title, use 24hr format, standard datetime, and leave anything as " " if it is not easily discernable.* 
+    [attendees, title, date, time]) based the question, try to figure out what its asking. 
     It will be after the word QUESTION>. 
-    QUESTION>schedule a meeting with sam on tuesday at 6 pm"""
+    QUESTION>add sam to my contacts"""
+
     
     completion = generate_text(model, prompt, seed)
     if completion:

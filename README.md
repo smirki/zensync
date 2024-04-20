@@ -1,5 +1,5 @@
-![zensync_logo](zensync_logo.png) 
-# ZenSync 
+![zensync_logo](zensync_logo.png)
+# ZenSync!!!
 
 ## Overview
 ZenSync(ZS) is an open-source project that revolutionizes personal and team productivity. It integrates advanced AI and automation to organize your daily activities, manage tasks, and optimize schedules efficiently.

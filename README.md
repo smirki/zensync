@@ -1,4 +1,4 @@
-![zensync_logo](zensync_logo.png)
+![zensync_logo](screenshot.png)
 # ZenSync!!!
 
 ## Overview

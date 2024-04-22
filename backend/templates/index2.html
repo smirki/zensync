@@ -1,186 +1,311 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enhanced Chat Interface</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
-    
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!--
 // v0 by Vercel.
 // https://v0.dev/t/8cVP7rRluIZ
 -->
 
-<style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans: 'Inter'; }
-</style>
-<style>body { font-family: 'Inter', sans-serif; --font-sans: 'Inter'; }
-</style>
-<div class="flex h-screen w-full dark:bg-gray-900 dark:text-gray-50">
-  <div class="bg-white dark:bg-gray-800 w-full max-w-[800px] border-r border-gray-200 dark:border-gray-700 flex flex-col">
-    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-      <div class="flex items-center gap-4">
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+    <style>
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Inter", sans-serif;
+        --font-sans: "Inter";
+      }
+    </style>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        --font-sans: "Inter";
+      }
+    </style>
+    <div class="flex h-screen w-full dark:bg-gray-900 dark:text-gray-50">
+      <div
+        class="bg-white dark:bg-gray-800 w-full max-w-[800px] border-r border-gray-200 dark:border-gray-700 flex flex-col"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700"
+        >
+          <div class="flex items-center gap-4">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+              <span class="sr-only">Previous Month</span>
+            </button>
+            <div class="text-lg font-medium">April 2023</div>
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+              <span class="sr-only">Next Month</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                <line x1="16" x2="16" y1="2" y2="6"></line>
+                <line x1="8" x2="8" y1="2" y2="6"></line>
+                <line x1="3" x2="21" y1="10" y2="10"></line>
+                <path d="M8 14h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M16 14h.01"></path>
+                <path d="M8 18h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M16 18h.01"></path>
+              </svg>
+              <span class="sr-only">Go to Today</span>
+            </button>
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                <line x1="16" x2="16" y1="2" y2="6"></line>
+                <line x1="8" x2="8" y1="2" y2="6"></line>
+                <line x1="3" x2="21" y1="10" y2="10"></line>
+              </svg>
+              <span class="sr-only">Open Calendar</span>
+            </button>
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path
+                  d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                ></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span class="sr-only">Calendar Settings</span>
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-7 gap-px bg-gray-200 dark:bg-gray-700">
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
           >
-            <path d="m15 18-6-6 6-6"></path>
-          </svg>
-          <span class="sr-only">Previous Month</span>
-        </button>
-        <div class="text-lg font-medium">April 2023</div>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+            Sun
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
           >
-            <path d="m9 18 6-6-6-6"></path>
-          </svg>
-          <span class="sr-only">Next Month</span>
-        </button>
-      </div>
-      <div class="flex items-center gap-4">
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+            Mon
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
           >
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-            <line x1="16" x2="16" y1="2" y2="6"></line>
-            <line x1="8" x2="8" y1="2" y2="6"></line>
-            <line x1="3" x2="21" y1="10" y2="10"></line>
-            <path d="M8 14h.01"></path>
-            <path d="M12 14h.01"></path>
-            <path d="M16 14h.01"></path>
-            <path d="M8 18h.01"></path>
-            <path d="M12 18h.01"></path>
-            <path d="M16 18h.01"></path>
-          </svg>
-          <span class="sr-only">Go to Today</span>
-        </button>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+            Tue
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
           >
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-            <line x1="16" x2="16" y1="2" y2="6"></line>
-            <line x1="8" x2="8" y1="2" y2="6"></line>
-            <line x1="3" x2="21" y1="10" y2="10"></line>
-          </svg>
-          <span class="sr-only">Open Calendar</span>
-        </button>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+            Wed
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
           >
-            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-          <span class="sr-only">Calendar Settings</span>
-        </button>
-      </div>
-    </div>
-    <div class="grid grid-cols-7 gap-px bg-gray-200 dark:bg-gray-700">
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Sun
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Mon
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Tue
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Wed
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Thu
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Fri
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        Sat
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        28
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        29
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-        30
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50 bg-gray-100 dark:bg-gray-700">
-        1
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50">
-        2
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50">
-        3
-      </div>
-      <div class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50">
-        4
-      </div>
-    </div>
-    <div class="flex-1 overflow-y-auto">
-      <div id="messages" class="p-6 space-y-6">
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
+            Thu
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+          >
+            Fri
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+          >
+            Sat
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+          >
+            28
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+          >
+            29
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+          >
+            30
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50 bg-gray-100 dark:bg-gray-700"
+          >
             1
           </div>
-          <div>
-            <div class="font-medium">Meeting with the team</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">10:00 AM - 11:00 AM</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Location: Conference Room A</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: John, Jane, Bob, Alice</div>
-            <div class="mt-2">
-              <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+          >
+            2
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+          >
+            3
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+          >
+            4
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <div id="events" class="p-6 space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium"
+              >
+                1
+              </div>
+              <div>
+                <div class="font-medium">Meeting with the team</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  10:00 AM - 11:00 AM
+                </div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  Location: Conference Room A
+                </div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  Attendees: John, Jane, Bob, Alice
+                </div>
+                <div class="mt-2">
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-4 h-4 mr-2"
+                    >
+                      <path
+                        d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"
+                      ></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <path
+                        d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"
+                      ></path>
+                    </svg>
+                    Edit Event
+                  </button>
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 ml-2"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-4 h-4 mr-2"
+                    >
+                      <path d="M3 6h18"></path>
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    Delete Event
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 space-y-6">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-medium">Contacts</h2>
+              <div class="relative w-full max-w-md">
+                <input
+                  class="flex h-10 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-50"
+                  placeholder="Search contacts..."
+                  type="search"
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -191,150 +316,208 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="w-4 h-4 mr-2"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400"
                 >
-                  <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
                 </svg>
-                Edit Event
-              </button>
-              <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 ml-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="w-4 h-4 mr-2"
-                >
-                  <path d="M3 6h18"></path>
-                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                </svg>
-                Delete Event
-              </button>
+              </div>
+            </div>
+            <div
+              id="contacts"
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-gray-100 dark:bg-gray-700 flex-1 flex flex-col"
+        data-id="117"
+      >
+        <div
+          class="border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between"
+          data-id="118"
+        >
+          <div class="flex items-center gap-4" data-id="119">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+              data-id="120"
+              ><img
+                class="aspect-square h-full w-full"
+                alt="You"
+                data-id="121"
+                src="https://generated.vusercontent.net/placeholder-user.jpg"
+            /></span>
+            <div data-id="123">
+              <div class="font-medium" data-id="124">You</div>
+              <div
+                class="text-sm text-gray-500 dark:text-gray-400"
+                data-id="125"
+              >
+                Online
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4" data-id="126">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              data-id="127"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+                data-id="128"
+              >
+                <path
+                  d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"
+                ></path></svg
+              ><span class="sr-only" data-id="129">Attach File</span></button
+            ><button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              data-id="130"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+                data-id="131"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="19" cy="12" r="1"></circle>
+                <circle cx="5" cy="12" r="1"></circle></svg
+              ><span class="sr-only" data-id="132">More Options</span>
+            </button>
+          </div>
+        </div>
+        <div id="messages" class="flex-1 overflow-y-auto p-6 space-y-4" data-id="133">
+          <div class="flex items-start space-x-4" data-id="400">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+              data-id="135"
+              ><img
+                class="aspect-square h-full w-full"
+                alt="AI"
+                data-id="136"
+                src="https://via.placeholder.com/placeholder-user.jpg"
+            /></span>
+            <div
+              class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%]"
+              data-id="138"
+            >
+              <p class="text-gray-900 dark:text-gray-50" data-id="139">
+                Hello, how can I assist you today?
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 justify-end" data-id="140">
+            <div
+              class="bg-gray-900 dark:bg-gray-50 rounded-lg p-4 max-w-[70%] text-gray-50 dark:text-gray-900"
+              data-id="141"
+            >
+              <p data-id="142">I'd like to discuss the new project proposal.</p>
+            </div>
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+              data-id="143"
+              ><img
+                class="aspect-square h-full w-full"
+                alt="You"
+                data-id="144"
+                src="https://generated.vusercontent.net/placeholder-user.jpg"
+            /></span>
+          </div>
+          <div class="flex items-start space-x-4" data-id="146">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+              data-id="147"
+              ><img
+                class="aspect-square h-full w-full"
+                alt="AI"
+                data-id="148"
+                src="https://generated.vusercontent.net/placeholder-user.jpg"
+            /></span>
+            <div
+              class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%]"
+              data-id="150"
+            >
+              <p class="text-gray-900 dark:text-gray-50" data-id="151">
+                Sure, let's go over the details of the proposal.
+              </p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-medium">Contacts</h2>
-          <div class="relative w-full max-w-md">
-            <input
-              class="flex h-10 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-50"
-              placeholder="Search contacts..."
-              type="search"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </svg>
-          </div>
-        </div>
-        <div id="contacts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bg-gray-100 dark:bg-gray-700 flex-1 flex flex-col">
-    <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">You</span>
-        </span>
-        <div>
-          <div class="font-medium">You</div>
-          <div class="text-sm text-gray-500 dark:text-gray-400">Online</div>
-        </div>
-      </div>
-      <div class="flex items-center gap-4">
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
+        <div
+          class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center"
+          data-id="152"
+        >
+          <textarea
+            id="chatbox"
+            class="flex h-10 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 mr-4 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-50"
+            placeholder="Type your message..."
+            data-id="153"
+          ></textarea><button
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900"
+            data-id="154"
           >
-            <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-          </svg>
-          <span class="sr-only">Attach File</span>
-        </button>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="w-5 h-5"
-          >
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="19" cy="12" r="1"></circle>
-            <circle cx="5" cy="12" r="1"></circle>
-          </svg>
-          <span class="sr-only">More Options</span>
-        </button>
+            Send
+          </button>
+        </div>
       </div>
     </div>
-    
-   
-    
-    <div class="border-t h-100 border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center">
-        
-      <textarea
-        id = "chatbox"
-        onkeypress="handleKeyPress(event)"
-        style="
-    height: 480px;
-    font-size: 20px; "
-        class="flex  h-1000 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 mr-4 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-50"
-        placeholder="Type your message..."
-      ></textarea>
-      
-    </div>
-  </div>
-</div>
-<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-4 rounded shadow-lg">
+    <div
+      id="modal"
+      class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+    >
+      <div class="bg-white p-4 rounded shadow-lg">
         <h2 class="font-bold text-lg">Error</h2>
         <p class="my-4" id="modalText">An error occurred. Please try again.</p>
         <div class="flex justify-end">
-            <button onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded mr-2">
-                Close
-            </button>
+          <button
+            onclick="closeModal()"
+            class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded mr-2"
+          >
+            Close
+          </button>
         </div>
+      </div>
     </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
+      $(document).ready(function() {
+        // Function to load and update UI with data from the server
+        function loadAndUpdateUI() {
+          $.ajax({
+            url: '/ai',
+            type: 'GET',
+            success: function(data) {
+              updateUI(data);
+            },
+            error: function() {
+              $('#modalText').text('Failed to load data from the server.');
+              $('#modal').removeClass('hidden');
+            }
+          });
+        }
+      function closeModal() {
+        $('#modal').addClass('hidden');
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
     let globalCommand = '';
 
     function confirmCommand() {
@@ -343,22 +526,23 @@
     }
 
     function handleKeyPress(event) {
-        if (event.keyCode === 13) { // Enter key
-            event.preventDefault();
-            confirmCommand();
-        }
-    }
+      console.log("Key pressed: ", event.keyCode); // Log key code for debugging
+      if (event.keyCode === 13) { // Enter key
+          event.preventDefault();
+          confirmCommand();
+      }
+  }
+  
 
-    function closeModal() {
-        $('#modal').addClass('hidden');
-    }
-
+    
     function sendCommand() {
+      console.log("hi");
         $.ajax({
+          
             url: '/ai',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({command: globalCommand}),
+            data: JSON.stringify({ command: globalCommand }),
             success: function(data) {
                 $('#chatbox').val('');
                 updateUI(data);
@@ -368,141 +552,125 @@
             }
         });
     }
-    // Define variables to keep track of the current date and events
-let currentDate = new Date();
-let events = [
-  // Your existing events data
-];
 
-// Function to render the calendar for a specific month and year
-function renderCalendar(month, year) {
-  // Clear the existing calendar
-  const calendarBody = document.getElementById('calendar-body');
-  calendarBody.innerHTML = '';
+    /*
 
-  // Calculate the number of days in the month
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let currentDate = new Date();
+    let events = [];
 
-  // Create the calendar cells
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    const cell = document.createElement('div');
-    cell.classList.add('calendar-cell');
-    cell.textContent = day;
-    cell.addEventListener('click', () => showEvents(date));
+    function renderCalendar(month, year) {
+        const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = '';
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Add the events for the day
-    const eventsList = document.createElement('div');
-    eventsList.classList.add('events-list');
-    const eventsForDay = filterEvents(date);
-    eventsForDay.forEach(event => {
-      const eventElement = document.createElement('div');
-      eventElement.textContent = event.title;
-      eventsList.appendChild(eventElement);
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const cell = document.createElement('div');
+            cell.classList.add('calendar-cell');
+            cell.textContent = day;
+            cell.addEventListener('click', () => showEvents(date));
+            const eventsList = document.createElement('div');
+            eventsList.classList.add('events-list');
+            const eventsForDay = filterEvents(date);
+            eventsForDay.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.textContent = `${event.title} (${event.starttime} - ${event.endtime})`;
+                eventsList.appendChild(eventElement);
+            });
+            cell.appendChild(eventsList);
+            calendarBody.appendChild(cell);
+        }
+    }
+
+    function filterEvents(date) {
+        return events.filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getFullYear() === date.getFullYear() &&
+                   eventDate.getMonth() === date.getMonth() &&
+                   eventDate.getDate() === date.getDate();
+        });
+    }
+
+    function showEvents(date) {
+        const eventsContainer = document.getElementById('events-container');
+        eventsContainer.innerHTML = '';
+        const eventsForDay = filterEvents(date);
+        eventsForDay.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.textContent = `${event.title} (${event.starttime} - ${event.endtime})`;
+            eventsContainer.appendChild(eventElement);
+        });
+    }
+
+    const prevMonthButton = document.getElementById('prev-month');
+    const nextMonthButton = document.getElementById('next-month');
+
+    prevMonthButton.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
     });
-    cell.appendChild(eventsList);
 
-    calendarBody.appendChild(cell);
-  }
-}
+    nextMonthButton.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
+    });
 
-// Function to filter events for a specific date
-function filterEvents(date) {
-  return events.filter(event => {
-    const eventDate = new Date(event.date);
-    return (
-      eventDate.getFullYear() === date.getFullYear() &&
-      eventDate.getMonth() === date.getMonth() &&
-      eventDate.getDate() === date.getDate()
-    );
-  });
-}
-
-// Function to show events for a specific date
-function showEvents(date) {
-  const eventsContainer = document.getElementById('events-container');
-  eventsContainer.innerHTML = '';
-
-  const eventsForDay = filterEvents(date);
-  eventsForDay.forEach(event => {
-    const eventElement = document.createElement('div');
-    eventElement.textContent = `${event.title} (${event.starttime} - ${event.endtime})`;
-    eventsContainer.appendChild(eventElement);
-  });
-}
-
-// Add event listeners to the calendar navigation buttons
-const prevMonthButton = document.getElementById('prev-month');
-const nextMonthButton = document.getElementById('next-month');
-
-prevMonthButton.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-});
-
-nextMonthButton.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-});
-
-// Initialize the calendar
-renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-
+    renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
+    */
     function updateUI(data) {
-    let contactsDiv = $('#contacts');
-    let messages = $('#messages');
-
-    contactsDiv.empty(); // Clear existing contacts
-    data.contacts.forEach(contact => {
-        // Append each contact with their information
-        contactsDiv.append(`
-            <div class="flex items-center p-2 bg-white rounded shadow my-1">
-                <img src="https://via.placeholder.com/50" class="rounded-full mr-3">
-                <div>
-                    <strong>${contact.name}</strong><br>
-                    <span class="text-sm text-gray-500">${contact.info || ''}</span>
-                </div>
-            </div>
-        `);
+      let contactsDiv = $('#contacts');
+      let eventsDiv = $('#events'); // Changed from messagesDiv to eventsDiv to reflect the target element
+  
+      // Clear existing content
+      contactsDiv.empty();
+      eventsDiv.empty();
+  
+      // Append new contacts
+      data.contacts.forEach(contact => {
+          contactsDiv.append(`
+              <div class="flex items-center p-2 bg-white rounded shadow my-1">
+                  <img src="https://via.placeholder.com/50" class="rounded-full mr-3">
+                  <div>
+                      <strong>${contact.name}</strong><br>
+                      <span class="text-sm text-gray-500">${contact.info || ''}</span>
+                  </div>
+              </div>
+          `);
+      });
+  
+      // Append new events
+      data.events.forEach((event, index) => {
+          eventsDiv.append(`
+              <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
+                      ${index + 1}
+                  </div>
+                  <div>
+                      <div class="font-medium">${event.title}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
+                  </div>
+              </div>
+          `);
+      });
+  
+      // Append messages as events (assuming 'data.messages' is an array of message objects)
+      let messagesDiv = $('#messages');
+    data.messages.forEach(msg => {
+        let messageHTML = '<div class="flex items-start space-x-4 justify-end"><div class="bg-gray-900 dark:bg-gray-50 rounded-lg p-4 max-w-[70%] text-gray-50 dark:text-gray-900"><p>' + msg.text + '</p></div><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" alt="User" src="https://via.placeholder.com/150" /></span></div>';
+        messagesDiv.append(messageHTML);
     });
-
-    messages.empty(); // Clear existing messages
-    data.events.forEach((event, index) => {
-        // Append each event with details
-        messages.append(`
-            <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
-                    ${index + 1}
-                </div>
-                <div>
-                    <div class="font-medium">${event.title}</div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
-                    <div class="mt-2">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
-                            </svg>
-                            Edit Event
-                        </button>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 ml-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                <path d="M3 6h18"></path>
-                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                            </svg>
-                            Delete Event
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `);
-    });
+    $('#chatbox').val(''); // Clear the input field after sending the message
 }
 
+  
+    console.log($("#chatbox").length);  // This should log 1 if the element exists
+$("#chatbox").on("keypress", handleKeyPress);
+    $("button[data-id='154']").on("click", confirmCommand);
+});
+
+});
 </script>
 </body>
 </html>

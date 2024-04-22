@@ -475,81 +475,74 @@
       }
     
       function updateUI(data) {
-        console.log("Updating UI with data: ", data);
+    console.log("Updating UI with data: ", data);
+
+    // Update contacts if data is provided
+    if (data.contacts) {
         let contactsDiv = $('#contacts');
-        let eventsDiv = $('#events');
-        let messagesDiv = $('#messages');
-    
-        // Clear existing content
-        contactsDiv.empty();
-        eventsDiv.empty();
-        messagesDiv.empty();
-    
-        // Append new contacts
-        if (data.contacts && Array.isArray(data.contacts)) {
-            data.contacts.forEach(contact => {
-                contactsDiv.append(`
-                    <div class="flex items-center p-2 bg-white rounded shadow my-1">
-                        <img src="${contact.image || 'https://via.placeholder.com/50'}" class="rounded-full mr-3">
-                        <div>
-                            <strong>${contact.name}</strong><br>
-                            <span class="text-sm text-gray-500">${contact.info || ''}</span>
-                        </div>
+        contactsDiv.empty(); // Clear existing contacts
+        data.contacts.forEach(contact => {
+            contactsDiv.append(`
+                <div class="flex items-center p-2 bg-white rounded shadow my-1">
+                    <img src="${contact.image || 'https://via.placeholder.com/50'}" class="rounded-full mr-3">
+                    <div>
+                        <strong>${contact.name}</strong><br>
+                        <span class="text-sm text-gray-500">${contact.info || ''}</span>
                     </div>
-                `);
-            });
-        } else {
-            console.log("No contacts data or not an array");
-        }
-    
-        // Append new messages
-        if (data.messages && Array.isArray(data.messages)) {
-            data.messages.forEach(msg => {
-                let messageHTML = msg["from"] === 'user' ? `
-                    <div class="flex items-start justify-end space-x-reverse space-x-4">
-                        <div class="bg-black rounded-lg p-4 max-w-[70%] text-white">
-                            <p>${msg.text}</p>
-                        </div>
-                        <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                            <img class="aspect-square h-full w-full" alt="User" src="https://generated.vusercontent.net/placeholder-user.jpg" />
-                        </span>
-                    </div>` : `
-                    <div class="flex items-start space-x-4">
-                        <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                            <img class="aspect-square h-full w-full" alt="AI" src="https://generated.vusercontent.net/placeholder-user.jpg" />
-                        </span>
-                        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%] text-gray-900 dark:text-gray-50">
-                            <p>${msg.text}</p>
-                        </div>
-                    </div>`;
-                messagesDiv.append(messageHTML);
-            });
-        } else {
-            console.log("No messages data or not an array");
-        }
-    
-        // Append new events
-        if (data.events && Array.isArray(data.events)) {
-            data.events.forEach((event, index) => {
-                eventsDiv.append(`
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
-                            ${index + 1}
-                        </div>
-                        <div>
-                            <div class="font-medium">${event.title}</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
-                        </div>
-                    </div>
-                `);
-            });
-        } else {
-            console.log("No events data or not an array");
-        }
+                </div>
+            `);
+        });
     }
-    
+
+    // Update messages if data is provided
+    if (data.messages) {
+        let messagesDiv = $('#messages');
+        messagesDiv.empty(); // Clear existing messages
+        data.messages.forEach(msg => {
+            let messageHTML = msg["from"] === 'user' ? `
+                <div class="flex items-start justify-end space-x-reverse space-x-4">
+                    <div class="bg-black rounded-lg p-4 max-w-[70%] text-white">
+                        <p>${msg.text}</p>
+                    </div>
+                    <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                        <img class="aspect-square h-full w-full" alt="User" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                    </span>
+                </div>` : `
+                <div class="flex items-start space-x-4">
+                    <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                        <img class="aspect-square h-full w-full" alt="AI" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                    </span>
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%] text-gray-900 dark:text-gray-50">
+                        <p>${msg.text}</p>
+                    </div>
+                </div>`;
+            messagesDiv.append(messageHTML);
+        });
+    }
+
+    // Update events if data is provided
+    if (data.events) {
+        let eventsDiv = $('#events');
+        eventsDiv.empty(); // Clear existing events
+        data.events.forEach((event, index) => {
+            eventsDiv.append(`
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
+                        ${index + 1}
+                    </div>
+                    <div>
+                        <div class="font-medium">${event.title}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Date: ${event.date}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
+                    </div>
+                </div>
+            `);
+        });
+    }
+}
+
     $("#chatbox").on("keypress", handleKeyPress);
     $("button[data-id='154']").on("click", confirmCommand);
 

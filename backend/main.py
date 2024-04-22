@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 import json
+from datetime import date
+today = date.today()
+import calendar
+dow = calendar.day_name[today.weekday()] 
 
 app = Flask(__name__)
 
@@ -36,15 +40,15 @@ def ai_endpoint():
 
     model = "llama3:8b"  # Adjust model name as necessary
     seed = 42
-    prompt = (f"Respond to this question with just json. ONLY one of these choices in VALID JSON format and nothing else: "
-              f"(\"addContact\" : {{\"name\" : person's name, email : email, socials : socials, info : really good summary of the person if given such as hobbies or things to remember them by, else leave blank. }} }}| removeContact : name | scheduleMeeting : {{attendees : [], title : *really good summary of request*, date : *like today, tomorrow etc*, startime : 24hrtime, endtime: 24hrtime}} | "
+    prompt = (f"All dates should be MM-DD-YYYY. Respond to this question with just json. ONLY one of these choices in VALID JSON format and nothing else: "
+              f"(\"addContact\" : {{\"name\" : person's name, email : email, socials : socials, info : really good summary of the person if given such as hobbies or things to remember them by, else leave blank. }} }}| removeContact : name | scheduleMeeting : {{attendees : [], title : *really good summary of request*, date : *Today is :{dow},{today}. calculate the date the user is requesting*, startime : 24hrtime, endtime: 24hrtime}} | "
               f"removeMeeting : [title, date, time] | editMeeting : name | moveMeeting : meetingName | showSchedule : date | "
               f"getEventDetails : [date, time] | setReminder : [event, date, time] | removeReminder : [event, date] | findUsers : {{topics: related to the users they want to find}} looking for a user to hang out with |"
               f"listUpcomingEvents : duration | queryFreeTime : date | syncCalendars : ) based on the question, try to figure out what it's asking. Answer in JSON only after QUESTION>"
               f"QUESTION>{command}")
 
     completion = generate_text(model, prompt, seed)
-    user_response = generate_text(model, f"You are an ai    chatbot for an ai calendar that responds to a user, user said this:{command} and this was the response: {completion} , respond to the user in the simplest words, like an ai chatbot that knows what is going on. Dont ask any followup questions.", seed)  # Initialize an empty list for messages
+    user_response = generate_text(model, f"You are an ai    chatbot for an ai calendar that responds to a user, user said this: and this was the response: {completion} , respond to the user in the simplest words, like an ai chatbot that knows what is going on. Dont ask any followup questions.", seed)  # Initialize an empty list for messages
     if completion:
         # Process the response and also capture any messages if needed
         process_success = process_response(completion)

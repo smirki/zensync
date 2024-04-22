@@ -7,6 +7,7 @@ app = Flask(__name__)
 # Simulated database
 contacts = []
 events = []
+messages = []
 
 def generate_text(model_name, prompt, seed, temperature=0):
     API_URL = "https://ollama.saipriya.org/api/generate"
@@ -31,19 +32,19 @@ def generate_text(model_name, prompt, seed, temperature=0):
 def ai_endpoint():
     data = request.get_json()
     command = data.get('command')
+    messages.append({"text": command, "from": "user"})
 
     model = "llama3:8b"  # Adjust model name as necessary
     seed = 42
-    prompt = (f"Respond to this question with ONLY one of these choices in VALID JSON format and nothing else: "
-              f"(\"addContact\" : {{\"name\" : person's name, info : really good summary of the person if given such as hobbies or things to remember them by, else leave blank. }} }}| removeContact : name | scheduleMeeting : {{attendees : [], title : *really good summary of request*, date : *like today, tomorrow etc*, startime : 24hrtime, endtime: 24hrtime}} | "
+    prompt = (f"Respond to this question with just json. ONLY one of these choices in VALID JSON format and nothing else: "
+              f"(\"addContact\" : {{\"name\" : person's name, email : email, socials : socials, info : really good summary of the person if given such as hobbies or things to remember them by, else leave blank. }} }}| removeContact : name | scheduleMeeting : {{attendees : [], title : *really good summary of request*, date : *like today, tomorrow etc*, startime : 24hrtime, endtime: 24hrtime}} | "
               f"removeMeeting : [title, date, time] | editMeeting : name | moveMeeting : meetingName | showSchedule : date | "
               f"getEventDetails : [date, time] | setReminder : [event, date, time] | removeReminder : [event, date] | findUsers : {{topics: related to the users they want to find}} looking for a user to hang out with |"
-              f"listUpcomingEvents : duration | queryFreeTime : date | syncCalendars : ) based on the question, try to figure out what it's asking. Check again to make sure it is only outputting valid JSON. "
+              f"listUpcomingEvents : duration | queryFreeTime : date | syncCalendars : ) based on the question, try to figure out what it's asking. Answer in JSON only after QUESTION>"
               f"QUESTION>{command}")
 
     completion = generate_text(model, prompt, seed)
-    user_response = generate_text(model, f"You are an ai    chatbot for an ai calendar that responds to a user, user said this:{command} and this was the response: {completion} , respond to the user in the simplest words, like an ai chatbot that knows what is going on.", seed)
-    messages = []  # Initialize an empty list for messages
+    user_response = generate_text(model, f"You are an ai    chatbot for an ai calendar that responds to a user, user said this:{command} and this was the response: {completion} , respond to the user in the simplest words, like an ai chatbot that knows what is going on. Dont ask any followup questions.", seed)  # Initialize an empty list for messages
     if completion:
         # Process the response and also capture any messages if needed
         process_success = process_response(completion)
@@ -67,7 +68,7 @@ def remove_contact_prompt(remv_contact):
     prompt = f"Given the following contacts: {contacts_info}. Answer ONLY with the exact name from the list that matches with {remv_contact} and capitalization to remove, nothing else."
     model_name = "llama3:8b"  # Adjust model name as necessary
     seed = 42
-    temperature = 0.5
+    temperature = 0
     completion = generate_text(model_name, prompt, seed, temperature)
 
     if completion:
@@ -145,6 +146,7 @@ def process_response(completion):
                 "endtime": response['scheduleMeeting']['endtime']
             }
             events.append(event)
+            print(events)
         elif 'removeMeeting' in response:
             events[:] = [event for event in events if event['title'] != response['removeMeeting'][0]]
         elif 'showSchedule' in response:
@@ -176,7 +178,7 @@ def process_response(completion):
 
 @app.route('/')
 def home():
-    return render_template('index2.html')
+    return render_template('index3.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

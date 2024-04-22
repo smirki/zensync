@@ -229,73 +229,6 @@
         </div>
         <div class="flex-1 overflow-y-auto">
           <div id="events" class="p-6 space-y-6">
-            <div class="flex items-start gap-4">
-              <div
-                class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium"
-              >
-                1
-              </div>
-              <div>
-                <div class="font-medium">Meeting with the team</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                  10:00 AM - 11:00 AM
-                </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                  Location: Conference Room A
-                </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                  Attendees: John, Jane, Bob, Alice
-                </div>
-                <div class="mt-2">
-                  <button
-                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="w-4 h-4 mr-2"
-                    >
-                      <path
-                        d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"
-                      ></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                      <path
-                        d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"
-                      ></path>
-                    </svg>
-                    Edit Event
-                  </button>
-                  <button
-                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 ml-2"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="w-4 h-4 mr-2"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                    </svg>
-                    Delete Event
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <div class="p-6 space-y-6">
             <div class="flex items-center justify-between">
@@ -498,179 +431,140 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-      $(document).ready(function() {
-        // Function to load and update UI with data from the server
-        function loadAndUpdateUI() {
-          $.ajax({
-            url: '/ai',
-            type: 'GET',
-            success: function(data) {
-              updateUI(data);
-            },
-            error: function() {
-              $('#modalText').text('Failed to load data from the server.');
-              $('#modal').removeClass('hidden');
-            }
-          });
-        }
-      function closeModal() {
-        $('#modal').addClass('hidden');
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-    let globalCommand = '';
-
-    function confirmCommand() {
-        globalCommand = $('#chatbox').val();
-        sendCommand();
-    }
-
-    function handleKeyPress(event) {
-      console.log("Key pressed: ", event.keyCode); // Log key code for debugging
-      if (event.keyCode === 13) { // Enter key
-          event.preventDefault();
-          confirmCommand();
-      }
-  }
-  
-
+      document.addEventListener("DOMContentLoaded", function() {
+        let globalCommand = '';
+        let data = {
+            messages: [],
+            contacts: [],
+            events: []
+        };
     
-    function sendCommand() {
-      console.log("hi");
-        $.ajax({
-          
-            url: '/ai',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ command: globalCommand }),
-            success: function(data) {
-                $('#chatbox').val('');
-                updateUI(data);
-            },
-            error: function() {
-                $('#modal').removeClass('hidden');
+        function confirmCommand() {
+            globalCommand = $('#chatbox').val();
+            
+            let userInput = $('#chatbox').val();
+            if (userInput.trim() !== '') {
+                let message = {
+                    text: userInput,
+                    sender: 'user'
+                };
+                data.messages.push(message); // Add message to the global data object
+                updateUI(data); // Update UI with current data
+                sendCommand();
+                $('#chatbox').val(''); // Clear the chatbox
             }
-        });
-    }
-
-    /*
-
-    let currentDate = new Date();
-    let events = [];
-
-    function renderCalendar(month, year) {
-        const calendarBody = document.getElementById('calendar-body');
-        calendarBody.innerHTML = '';
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        for (let day = 1; day <= daysInMonth; day++) {
-            const date = new Date(year, month, day);
-            const cell = document.createElement('div');
-            cell.classList.add('calendar-cell');
-            cell.textContent = day;
-            cell.addEventListener('click', () => showEvents(date));
-            const eventsList = document.createElement('div');
-            eventsList.classList.add('events-list');
-            const eventsForDay = filterEvents(date);
-            eventsForDay.forEach(event => {
-                const eventElement = document.createElement('div');
-                eventElement.textContent = `${event.title} (${event.starttime} - ${event.endtime})`;
-                eventsList.appendChild(eventElement);
+        }
+    
+        function handleKeyPress(event) {
+            console.log("Key pressed: ", event.keyCode);
+            if (event.keyCode === 13) { // Enter key
+                event.preventDefault();
+                confirmCommand();
+            }
+        }
+    
+        function sendCommand() {
+          console.log("Sending command: ", globalCommand);
+          $.ajax({
+              url: '/ai',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({ command: globalCommand }),
+              success: function(response) {
+                  console.log("Command successful: ", response);
+                  console.log("Received data: ", response);
+                  $('#chatbox').val('');
+                  updateUI(response); // Ensure 'response' contains 'contacts', 'events', 'messages'
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.error("AJAX error: ", textStatus, errorThrown);
+                  $('#modalText').text('Failed to send command. Please try again.');
+                  $('#modal').removeClass('hidden');
+              }
+          });
+      }
+    
+      function updateUI(data) {
+        console.log("Updating UI with data: ", data);
+        let contactsDiv = $('#contacts');
+        let eventsDiv = $('#events');
+        let messagesDiv = $('#messages');
+    
+        // Clear existing content
+        contactsDiv.empty();
+        eventsDiv.empty();
+        messagesDiv.empty();
+    
+        // Append new contacts
+        if (data.contacts && Array.isArray(data.contacts)) {
+            data.contacts.forEach(contact => {
+                contactsDiv.append(`
+                    <div class="flex items-center p-2 bg-white rounded shadow my-1">
+                        <img src="${contact.image || 'https://via.placeholder.com/50'}" class="rounded-full mr-3">
+                        <div>
+                            <strong>${contact.name}</strong><br>
+                            <span class="text-sm text-gray-500">${contact.info || ''}</span>
+                        </div>
+                    </div>
+                `);
             });
-            cell.appendChild(eventsList);
-            calendarBody.appendChild(cell);
+        } else {
+            console.log("No contacts data or not an array");
+        }
+    
+        // Append new messages
+        if (data.messages && Array.isArray(data.messages)) {
+            data.messages.forEach(msg => {
+                let messageHTML = msg["from"] === 'user' ? `
+                    <div class="flex items-start justify-end space-x-reverse space-x-4">
+                        <div class="bg-black rounded-lg p-4 max-w-[70%] text-white">
+                            <p>${msg.text}</p>
+                        </div>
+                        <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                            <img class="aspect-square h-full w-full" alt="User" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                        </span>
+                    </div>` : `
+                    <div class="flex items-start space-x-4">
+                        <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                            <img class="aspect-square h-full w-full" alt="AI" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                        </span>
+                        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%] text-gray-900 dark:text-gray-50">
+                            <p>${msg.text}</p>
+                        </div>
+                    </div>`;
+                messagesDiv.append(messageHTML);
+            });
+        } else {
+            console.log("No messages data or not an array");
+        }
+    
+        // Append new events
+        if (data.events && Array.isArray(data.events)) {
+            data.events.forEach((event, index) => {
+                eventsDiv.append(`
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
+                            ${index + 1}
+                        </div>
+                        <div>
+                            <div class="font-medium">${event.title}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
+                        </div>
+                    </div>
+                `);
+            });
+        } else {
+            console.log("No events data or not an array");
         }
     }
-
-    function filterEvents(date) {
-        return events.filter(event => {
-            const eventDate = new Date(event.date);
-            return eventDate.getFullYear() === date.getFullYear() &&
-                   eventDate.getMonth() === date.getMonth() &&
-                   eventDate.getDate() === date.getDate();
-        });
-    }
-
-    function showEvents(date) {
-        const eventsContainer = document.getElementById('events-container');
-        eventsContainer.innerHTML = '';
-        const eventsForDay = filterEvents(date);
-        eventsForDay.forEach(event => {
-            const eventElement = document.createElement('div');
-            eventElement.textContent = `${event.title} (${event.starttime} - ${event.endtime})`;
-            eventsContainer.appendChild(eventElement);
-        });
-    }
-
-    const prevMonthButton = document.getElementById('prev-month');
-    const nextMonthButton = document.getElementById('next-month');
-
-    prevMonthButton.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-    });
-
-    nextMonthButton.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-    });
-
-    renderCalendar(currentDate.getMonth(), currentDate.getFullYear());
-    */
-    function updateUI(data) {
-      let contactsDiv = $('#contacts');
-      let eventsDiv = $('#events'); // Changed from messagesDiv to eventsDiv to reflect the target element
-  
-      // Clear existing content
-      contactsDiv.empty();
-      eventsDiv.empty();
-  
-      // Append new contacts
-      data.contacts.forEach(contact => {
-          contactsDiv.append(`
-              <div class="flex items-center p-2 bg-white rounded shadow my-1">
-                  <img src="https://via.placeholder.com/50" class="rounded-full mr-3">
-                  <div>
-                      <strong>${contact.name}</strong><br>
-                      <span class="text-sm text-gray-500">${contact.info || ''}</span>
-                  </div>
-              </div>
-          `);
-      });
-  
-      // Append new events
-      data.events.forEach((event, index) => {
-          eventsDiv.append(`
-              <div class="flex items-start gap-4">
-                  <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
-                      ${index + 1}
-                  </div>
-                  <div>
-                      <div class="font-medium">${event.title}</div>
-                      <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
-                      <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
-                      <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
-                  </div>
-              </div>
-          `);
-      });
-  
-      // Append messages as events (assuming 'data.messages' is an array of message objects)
-      let messagesDiv = $('#messages');
-    data.messages.forEach(msg => {
-        let messageHTML = '<div class="flex items-start space-x-4 justify-end"><div class="bg-gray-900 dark:bg-gray-50 rounded-lg p-4 max-w-[70%] text-gray-50 dark:text-gray-900"><p>' + msg.text + '</p></div><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" alt="User" src="https://via.placeholder.com/150" /></span></div>';
-        messagesDiv.append(messageHTML);
-    });
-    $('#chatbox').val(''); // Clear the input field after sending the message
-}
-
-  
-    console.log($("#chatbox").length);  // This should log 1 if the element exists
-$("#chatbox").on("keypress", handleKeyPress);
+    
+    $("#chatbox").on("keypress", handleKeyPress);
     $("button[data-id='154']").on("click", confirmCommand);
-});
+    });
+    
 
-});
 </script>
 </body>
 </html>

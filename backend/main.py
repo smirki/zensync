@@ -26,11 +26,25 @@ def generate_text(model_name, prompt, seed, temperature=0):
     }
     response = requests.post(API_URL, json=payload)
     if response.status_code == 200:
-        print(response.json().get("response"))
+        print("Response, ", response.json().get("response"))
         return response.json().get("response")
     else:
         print(f"Error {response.status_code}: {response.text}")
         return None
+
+@app.route('/get-all-events', methods=['GET'])
+def get_all_events():
+    print('Sending all events:', events)
+    return jsonify({'events': events})
+
+
+@app.route('/get-events-for-day', methods=['POST'])
+def get_events_for_day():
+    date = request.json.get('date')
+    filtered_events = [event for event in events if event['date'] == date]
+    # Return only events that match the given date
+    print(filtered_events)
+    return jsonify({'events': filtered_events})
 
 @app.route('/ai', methods=['POST'])
 def ai_endpoint():
@@ -40,15 +54,15 @@ def ai_endpoint():
 
     model = "llama3:8b"  # Adjust model name as necessary
     seed = 42
-    prompt = (f"All dates should be MM-DD-YYYY. Respond to this question with just json. ONLY one of these choices in VALID JSON format and nothing else: "
+    prompt = (f"All dates should be YYYY-MM-DD. Respond to this question with just json. ONLY one of these choices in VALID JSON format and nothing else: "
               f"(\"addContact\" : {{\"name\" : person's name, email : email, socials : socials, info : really good summary of the person if given such as hobbies or things to remember them by, else leave blank. }} }}| removeContact : name | scheduleMeeting : {{attendees : [], title : *really good summary of request*, date : *Today is :{dow},{today}. calculate the date the user is requesting*, startime : 24hrtime, endtime: 24hrtime}} | "
               f"removeMeeting : [title, date, time] | editMeeting : name | moveMeeting : meetingName | showSchedule : date | "
-              f"getEventDetails : [date, time] | setReminder : [event, date, time] | removeReminder : [event, date] | findUsers : {{topics: related to the users they want to find}} looking for a user to hang out with |"
-              f"listUpcomingEvents : duration | queryFreeTime : date | syncCalendars : ) based on the question, try to figure out what it's asking. Answer in JSON only after QUESTION>"
+              f"getEventDetails : [date, time] | setReminder : [event, date, time] | removeReminder : [event, date] | findUsers : {{topics: related to the users they want to find}} (example what the user might start with: find user, who likes, who do i know... etc) |"
+              f"listUpcomingEvents : duration | queryFreeTime : date | syncCalendars : ) based on the question, try to figure out what it's asking. No additional things may be said, just json. Dont Write anything similar to Here is the response. Answer in JSON only after QUESTION>"
               f"QUESTION>{command}")
 
     completion = generate_text(model, prompt, seed)
-    user_response = generate_text(model, f"You are an ai    chatbot for an ai calendar that responds to a user, user said this: and this was the response: {completion} , respond to the user in the simplest words, like an ai chatbot that knows what is going on. Dont ask any followup questions.", seed)  # Initialize an empty list for messages
+    
     if completion:
         # Process the response and also capture any messages if needed
         process_success = process_response(completion)
@@ -56,6 +70,8 @@ def ai_endpoint():
             messages.append({"text": "Failed to process response", "from": "server"})  # Append error message
             return jsonify({"error": "Failed to process response", "messages": messages}), 400
         else:
+            print("process_success",process_success)
+            user_response = generate_text(model, f" *in 10 words or less* You are an ai    chatbot for an ai calendar that responds to a user, user said this: and this was the response: {completion}, {process_success} , respond to the user in the simplest words, like an ai chatbot that knows what is going on. Dont ask any followup questions.", seed)  # Initialize an empty list for messages
             messages.append({"text": user_response, "from": "server"})  # Append success message
 
     # Return the contacts, events, and messages in the response
@@ -96,7 +112,7 @@ def find_best_matches(topics):
     # Gather all contact information in a detailed prompt
     contacts_info = ". ".join([f"{contact['name']} is known for {contact.get('info', 'No additional info')}" for contact in contacts])
     # Create a detailed prompt for the LLM
-    prompt = f"Given the following contacts: {contacts_info}. Find the best match for someone interested in {' and '.join(topics)}."
+    prompt = f"Given the following contacts: {contacts_info}. JUST RETURN ONE NAME. Find the best match for someone interested in {' and '.join(topics)}."
     
     # Generate text from the LLM
     model_name = "llama3:8b"  # Adjust model name as necessary
@@ -110,8 +126,8 @@ def find_best_matches(topics):
         # Find and return the contact with that name
         best_match = next((contact for contact in contacts if contact['name'] == best_match_name), None)
         if best_match:
-            print(best_match)
-            return jsonify(best_match)
+            print("best match name", best_match["name"])
+            return jsonify(best_match["name"])
         else:
             return jsonify({"error": "No matching contact found"})
     else:
@@ -174,7 +190,9 @@ def process_response(completion):
             pass
         elif 'findUsers' in response:
             topics = response['findUsers']['topics']
-            return find_best_matches(topics)
+            findbest = find_best_matches(topics)
+            print("findbest_", str(findbest))
+            return findbest
         return True
     except (json.JSONDecodeError, KeyError, ValueError) as e:
         print(f"Error processing response: {str(e)}")
@@ -182,7 +200,7 @@ def process_response(completion):
 
 @app.route('/')
 def home():
-    return render_template('index3.html')
+    return render_template('index4.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

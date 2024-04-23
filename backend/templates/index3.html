@@ -482,11 +482,13 @@
         let contactsDiv = $('#contacts');
         contactsDiv.empty(); // Clear existing contacts
         data.contacts.forEach(contact => {
+            console.log(contact.email);
             contactsDiv.append(`
                 <div class="flex items-center p-2 bg-white rounded shadow my-1">
                     <img src="${contact.image || 'https://via.placeholder.com/50'}" class="rounded-full mr-3">
                     <div>
                         <strong>${contact.name}</strong><br>
+                        <span class="text-sm text-gray-500">${contact.email || ''}</span>
                         <span class="text-sm text-gray-500">${contact.info || ''}</span>
                     </div>
                 </div>
@@ -521,25 +523,26 @@
     }
 
     // Update events if data is provided
-    if (data.events) {
-        let eventsDiv = $('#events');
-        eventsDiv.empty(); // Clear existing events
-        data.events.forEach((event, index) => {
+    let eventsDiv = $('#events');
+    eventsDiv.empty(); // Clear existing events
+
+    if (data.events && data.events.length > 0) { 
+        data.events.forEach(event => {
             eventsDiv.append(`
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-full bg-gray-900 dark:bg-gray-50 flex items-center justify-center text-white dark:text-gray-900 font-medium">
-                        ${index + 1}
-                    </div>
+                <div class="flex items-center justify-between my-2 p-2 bg-white rounded shadow">
                     <div>
-                        <div class="font-medium">${event.title}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Date: ${event.date}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Location: ${event.location || 'N/A'}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Attendees: ${event.attendees.join(', ')}</div>
+                        <h3 class="font-medium">${event.title}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Date: ${event.date}</p>
                     </div>
+                    <button class="edit-event-btn inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-blue-500 hover:text-blue-700" data-event-id="${event.id}">
+                        <span>Edit</span>
+                    </button>
                 </div>
             `);
         });
+    } else {
+        eventsDiv.append('<p class="text-center text-gray-500 dark:text-gray-400">No events for this day.</p>');
     }
 }
 
@@ -549,10 +552,14 @@
     let currentDate = new Date();
 
     function loadEventsForDay(selectedDate) {
-        const formattedDate = selectedDate.toISOString().slice(0, 10); // 'YYYY-MM-DD'
-        const dayEvents = data.events.filter(event => event.date === formattedDate);
-        updateUI(dayEvents);
-    }
+    const formattedDate = formatDateToYYYYMMDD(selectedDate);
+
+    // Filter the events for the selected date
+    const dayEvents = data.events.filter(event => event.date === formattedDate);
+
+    // Now call updateUI with only the events for the selected day
+    updateUI({ ...data, events: dayEvents });
+}
 
     function updateCalendarWeek(offset) {
         currentDate.setDate(currentDate.getDate() + offset);
@@ -563,6 +570,17 @@
         currentDate = new Date(); // Reset to today's date
         refreshCalendar();
     }
+
+    function highlightToday() {
+    const today = new Date().toISOString().slice(0, 10); // Get today's date in 'YYYY-MM-DD' format
+    const dayCells = document.querySelectorAll('.day-cell');
+    dayCells.forEach(cell => {
+        if (cell.getAttribute('data-date') === today) {
+            cell.classList.add('bg-blue-500', 'text-white'); // Add classes to highlight today
+        }
+    });
+}
+
 
     function refreshCalendar() {
         loadCalendarDays();
@@ -578,9 +596,22 @@
             const newDate = new Date(startOfWeek);
             newDate.setDate(newDate.getDate() + index);
             cell.textContent = newDate.getDate();
-            cell.setAttribute('data-date', newDate.toISOString().slice(0, 10));
+            cell.setAttribute('data-date', formatDateToYYYYMMDD(newDate));
         });
     }
+
+    function formatDateToYYYYMMDD(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1; // Months are 0-based
+    let year = date.getFullYear();
+    
+    // Pad month and day with leading zeros if necessary
+    day = (day < 10) ? '0' + day : day;
+    month = (month < 10) ? '0' + month : month;
+    
+    return year + '-' + month + '-' + day;
+}
+
 
     function updateMonthDisplay() {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -592,13 +623,26 @@
     document.getElementById("todayButton").addEventListener("click", goToToday);
 
     document.querySelectorAll(".day-cell").forEach(cell => {
-        cell.addEventListener("click", function() {
-            const selectedDate = new Date(this.getAttribute('data-date'));
-            loadEventsForDay(selectedDate);
-        });
+    cell.addEventListener("click", function() {
+        // Extract date from the cell's data attribute
+        const selectedDateString = this.getAttribute('data-date');
+        const selectedDateParts = selectedDateString.split('-');
+        const selectedDate = new Date(selectedDateParts[0], selectedDateParts[1] - 1, selectedDateParts[2]);
+        
+        loadEventsForDay(selectedDate);
     });
+});
+
+
+    function refreshCalendar() {
+        loadCalendarDays();
+        updateMonthDisplay();
+        highlightToday(); // Highlight today after refreshing calendar
+        loadEventsForDay(currentDate); // This line might need adjustment based on how you want to handle the initial display of events
+    }
 
     refreshCalendar(); // Initial setup and load
+
     });
 
 

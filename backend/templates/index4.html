@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Interface</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="flex h-screen w-full dark:bg-gray-900 dark:text-gray-50">
+      <div class="grid grid-cols-[1fr_3fr] gap-6 w-full">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-4">
+              <button
+                id="prevWeek"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                <span class="sr-only">Previous Month</span>
+              </button>
+              <div id="currentMonth" class="text-lg font-medium">
+                April 2023
+              </div>
+              <button
+                id="nextWeek"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+                <span class="sr-only">Next Month</span>
+              </button>
+            </div>
+            <div class="flex items-center gap-4">
+              <button
+                id="todayButton"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                </svg>
+                <span class="sr-only">Open Calendar</span>
+              </button>
+              <button
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                  <path d="M8 14h.01"></path>
+                  <path d="M12 14h.01"></path>
+                  <path d="M16 14h.01"></path>
+                  <path d="M8 18h.01"></path>
+                  <path d="M12 18h.01"></path>
+                  <path d="M16 18h.01"></path>
+                </svg>
+                <span class="sr-only">Go to Today</span>
+              </button>
+              <button
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <path
+                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                  ></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span class="sr-only">Calendar Settings</span>
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-7 gap-2">
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Sun
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Mon
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Tue
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Wed
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Thu
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Fri
+            </div>
+            <div
+              class="bg-gray-100 dark:bg-gray-700 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              Sat
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              28
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              29
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+            >
+              30
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50 bg-gray-100 dark:bg-gray-700"
+            >
+              1
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+            >
+              2
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+            >
+              3
+            </div>
+            <div
+              class="day-cell"
+              data-date="2023-04-01"
+              class="bg-white dark:bg-gray-800 px-4 py3 text-center text-sm font-medium text-gray-900 dark:text-gray-50"
+            >
+              4
+            </div>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-lg font-medium">Daily Schedule</h2>
+            <div id="dailySchedule" class="space-y-4"></div>
+            <!-- Daily events will be loaded here -->
+            <h2 class="text-lg font-medium mt-8">All Events</h2>
+            <div id="allEvents" class="space-y-4"></div>
+            <!-- All events will be displayed here -->
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-medium">Contacts</h2>
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+              </svg>
+              <span class="sr-only">Add Contact</span>
+            </button>
+          </div>
+          <div id="contacts" class="grid grid-cols-2 gap-4">
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm"
+              data-v0-t="card"
+            >
+              <div class="p-6 flex items-center space-x-4">
+                <span
+                  class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+                >
+                  <span
+                    class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                    >JD</span
+                  >
+                </span>
+                <div>
+                  <h3 class="font-medium">John Doe</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Software Engineer
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm"
+              data-v0-t="card"
+            >
+              <div class="p-6 flex items-center space-x-4">
+                <span
+                  class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+                >
+                  <span
+                    class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                    >JS</span
+                  >
+                </span>
+                <div>
+                  <h3 class="font-medium">Jane Smith</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Product Manager
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm"
+              data-v0-t="card"
+            >
+              <div class="p-6 flex items-center space-x-4">
+                <span
+                  class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+                >
+                  <span
+                    class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                    >BJ</span
+                  >
+                </span>
+                <div>
+                  <h3 class="font-medium">Bob Johnson</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Designer
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm"
+              data-v0-t="card"
+            >
+              <div class="p-6 flex items-center space-x-4">
+                <span
+                  class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+                >
+                  <span
+                    class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                    >SL</span
+                  >
+                </span>
+                <div>
+                  <h3 class="font-medium">Sarah Lee</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Marketing Coordinator
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-100 dark:bg-gray-700 flex-1 flex flex-col">
+        <div
+          class="border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between"
+        >
+          <div class="flex items-center gap-4">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+            >
+              <span
+                class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                >You</span
+              >
+            </span>
+            <div>
+              <div class="font-medium">You</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Online</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path
+                  d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"
+                ></path>
+              </svg>
+              <span class="sr-only">Attach File</span>
+            </button>
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="19" cy="12" r="1"></circle>
+                <circle cx="5" cy="12" r="1"></circle>
+              </svg>
+              <span class="sr-only">More Options</span>
+            </button>
+          </div>
+        </div>
+        <div
+          style="overflow: auto"
+          id="messages"
+          class="flex-1 overflow-y-auto p-6 space-y-4"
+        >
+          <div class="flex items-start space-x-4">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+            >
+              <span
+                class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                >AI</span
+              >
+            </span>
+            <div
+              class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%]"
+            >
+              <p class="text-gray-900 dark:text-gray-50">
+                Hello, how can I assist you today?
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 justify-end">
+            <div
+              class="bg-gray-900 dark:bg-gray-50 rounded-lg p-4 max-w-[70%] text-gray-50 dark:text-gray-900"
+            >
+              <p>I'd like to discuss the new project proposal.</p>
+            </div>
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+            >
+              <span
+                class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                >You</span
+              >
+            </span>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span
+              class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+            >
+              <span
+                class="flex h-full w-full items-center justify-center rounded-full bg-muted"
+                >AI</span
+              >
+            </span>
+            <div
+              class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%]"
+            >
+              <p class="text-gray-900 dark:text-gray-50">
+                Sure, let's go over the details of the proposal.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center"
+        >
+          <input
+            id="chatbox"
+            class="flex h-10 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 mr-4 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-50"
+            placeholder="Type your message..."
+          />
+          <button
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let data = { messages: [], contacts: [], events: [] };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        $("#chatbox").on("keypress", function (event) {
+          if (event.keyCode === 13) {
+            // Enter key
+            event.preventDefault();
+            handleSendMessage();
+          }
+        });
+
+        function refreshAllEvents() {
+    $.ajax({
+        url: '/get-all-events',
+        type: 'GET',
+        success: function(response) {
+            updateEvents(response.events, 'all');
+        },
+        error: function() {
+            console.error('Error fetching all events.');
+        }
+    });
+}
+
+        function handleSendMessage() {
+          let userInput = $("#chatbox").val().trim();
+          if (userInput) {
+            $("#chatbox").val(""); // Clear input field
+            updateMessages({ text: userInput, from: "user" }); // Update UI optimistically
+            sendApiRequest(
+              "/ai",
+              { command: userInput },
+              handleResponse,
+              handleError
+            );
+          }
+        }
+
+        function sendApiRequest(url, data, onSuccess, onError) {
+          $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: onSuccess,
+            error: onError,
+          });
+        }
+
+        function handleResponse(response) {
+          console.log("Received response:", response);
+          updateUI(response); // Update UI based on the server response
+        }
+
+        function handleError(jqXHR, textStatus, errorThrown) {
+          console.error("AJAX error:", textStatus, errorThrown);
+          alert("Failed to send command. Please try again."); // Simplified error handling for user
+        }
+
+        function updateUI(response) {
+          if (response.messages) {
+            response.messages.forEach((message) => updateMessages(message));
+          }
+          if (response.contacts) {
+            updateContacts(response.contacts);
+          }
+          if (response.events) {
+            updateEvents(response.events);
+          }
+        }
+
+        function updateMessages(message) {
+          let messagesDiv = $("#messages");
+          // allow 1px inaccuracy by adding 1
+          var isScrolledToBottom =
+            messagesDiv.scrollHeight - messagesDiv.clientHeight <=
+            messagesDiv.scrollTop + 1;
+          if (isScrolledToBottom) {
+            messagesDiv.scrollTop =
+              messagesDiv.scrollHeight - messagesDiv.clientHeight;
+          }
+          let messageHTML =
+            message.from === "user"
+              ? `
+                <div class="flex items-start justify-end space-x-reverse space-x-4">
+                    <div class="bg-black rounded-lg p-4 max-w-[70%] text-white">
+                        <p>${message.text}</p>
+                    </div>
+                    <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                        <img class="aspect-square h-full w-full" alt="User" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                    </span>
+                </div>`
+              : `
+                <div class="flex items-start space-x-4">
+                    <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                        <img class="aspect-square h-full w-full" alt="AI" src="https://generated.vusercontent.net/placeholder-user.jpg" />
+                    </span>
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 max-w-[70%] text-gray-900 dark:text-gray-50">
+                        <p>${message.text}</p>
+                    </div>
+                </div>`;
+          messagesDiv.append(messageHTML);
+        }
+
+        function updateContacts(contacts) {
+          let contactsDiv = $("#contacts");
+          contactsDiv.empty();
+          contacts.forEach((contact) => {
+            contactsDiv.append(`
+                <div class="flex items-center p-2 bg-white rounded shadow my-1">
+                    <img src="${contact.image || "https://via.placeholder.com/50"}" class="rounded-full mr-3">
+                    <div>
+                        <strong>${contact.name}</strong><br>
+                        <span class="text-sm text-gray-500">${contact.email || ""}</span>
+                        <span class="text-sm text-gray-500">${contact.info || ""}</span>
+                    </div>
+                </div>
+            `);
+          });
+        }
+
+        function updateEvents(events) {
+          let dailyEventsDiv = $("#dailySchedule");
+          let allEventsDiv = $("#allEvents");
+
+          // Clear the 'All Events' section to be repopulated.
+          allEventsDiv.empty();
+
+          // Clear only today's events to repopulate them.
+          let todaysDate = formatDateToYYYYMMDD(new Date());
+          dailyEventsDiv.children().each(function () {
+            if ($(this).data("date") === todaysDate) {
+              $(this).remove();
+            }
+          });
+
+          events.forEach((event) => {
+            let eventHTML = `
+            <div class="event-item" data-date="${event.date}" data-event-id="${event.id}">
+                <div class="flex items-center justify-between my-2 p-2 bg-white rounded shadow">
+                    <div>
+                        <h3 class="font-medium">${event.title}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">${event.starttime} - ${event.endtime}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Date: ${event.date}</p>
+                    </div>
+                    <button class="edit-event-btn inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-blue-500 hover:text-blue-700">
+                        <span>Edit</span>
+                    </button>
+                </div>
+            </div>
+        `;
+
+            // Append to Daily Schedule if the event date is today
+            if (event.date === todaysDate) {
+              dailyEventsDiv.append(eventHTML);
+            }
+
+            // Append to All Events
+            allEventsDiv.append(eventHTML);
+          });
+        }
+
+        let currentDate = new Date();
+
+        // Refreshes the calendar view and events
+        function refreshCalendar() {
+          loadCalendarDays();
+          updateMonthDisplay();
+          highlightToday();
+          loadEventsForDay(currentDate);
+          loadAllEvents();
+        }
+
+        // Load and display events for the selected day
+        function loadEventsForDay(selectedDate) {
+          const formattedDate = formatDateToYYYYMMDD(selectedDate);
+          $.ajax({
+            url: "/get-events-for-day",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ date: formattedDate }),
+            success: function (response) {
+              updateUI({ events: response.events });
+            },
+            error: function () {
+              console.error("Error fetching events.");
+            },
+          });
+        }
+
+        function loadAllEvents() {
+          const formattedDate = formatDateToYYYYMMDD(selectedDate);
+          $.ajax({
+            url: "/",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ date: formattedDate }),
+            success: function (response) {
+              updateUI({ events: response.events });
+            },
+            error: function () {
+              console.error("Error fetching events.");
+            },
+          });
+        }
+
+        // Update the calendar to display days of the current month
+        function loadCalendarDays() {
+          const startOfWeek = new Date(currentDate);
+          startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Adjust to the start of the week
+          document.querySelectorAll(".day-cell").forEach((cell, index) => {
+            const newDate = new Date(startOfWeek);
+            newDate.setDate(newDate.getDate() + index);
+            cell.textContent = newDate.getDate();
+            cell.setAttribute("data-date", formatDateToYYYYMMDD(newDate));
+            cell.addEventListener("click", () => loadEventsForDay(newDate));
+          });
+        }
+
+        // Format date to YYYY-MM-DD
+        function formatDateToYYYYMMDD(date) {
+          let day = date.getDate();
+          let month = date.getMonth() + 1; // JavaScript months are zero-indexed
+          let year = date.getFullYear();
+          return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+        }
+
+        // Update the month and year label
+        function updateMonthDisplay() {
+          const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          document.getElementById("currentMonth").textContent =
+            monthNames[currentDate.getMonth()] +
+            " " +
+            currentDate.getFullYear();
+        }
+
+        // Highlight today's date on the calendar
+        function highlightToday() {
+          const today = new Date().toISOString().slice(0, 10);
+          document.querySelectorAll(".day-cell").forEach((cell) => {
+            if (cell.getAttribute("data-date") === today) {
+              cell.classList.add("bg-blue-500", "text-white");
+            } else {
+              cell.classList.remove("bg-blue-500", "text-white");
+            }
+          });
+        }
+
+        // Navigate weeks
+        document
+          .getElementById("prevWeek")
+          .addEventListener("click", () => updateCalendarWeek(-7));
+        document
+          .getElementById("nextWeek")
+          .addEventListener("click", () => updateCalendarWeek(7));
+
+        function updateCalendarWeek(offset) {
+          currentDate.setDate(currentDate.getDate() + offset);
+          refreshCalendar();
+        }
+
+        document.getElementById("todayButton").addEventListener("click", () => {
+          currentDate = new Date();
+          refreshCalendar();
+        });
+
+        refreshCalendar();
+      });
+    </script>
+  </body>
+</html>
